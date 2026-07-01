@@ -1,5 +1,11 @@
-const { default: mongoose } = require("mongoose");
-
+import mongoose from "mongoose";
 export let connectDb = async () => {
-  await mongoose.connect("0.0.0.0/employee");
+  try {
+    await mongoose.connect(
+      "mongodb+srv://rishabhsahu747422_db_user:ris1234567890@rishabh-1.s2exrue.mongodb.net/",
+    );
+    console.log("MongoDb connected");
+  } catch (error) {
+    console.log("error in mongodb", error);
+  }
 };

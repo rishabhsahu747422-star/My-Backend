@@ -1,6 +1,6 @@
-import empModel from "../models/employe.model";
+import empModel from "../models/employe.model.js";
 
-export const createEmployeeController = async (req, res) => {
+export const createEmployeController = async (req, res) => {
   try {
     let { empName, email, mobile } = req.body;
 
@@ -28,7 +28,7 @@ export const createEmployeeController = async (req, res) => {
   }
 };
 
-export const getAllEmployeeController = async (req, res) => {
+export const getAllEmployeController = async (req, res) => {
   try {
     let allEmployee = await empModel.find();
 
@@ -38,6 +38,8 @@ export const getAllEmployeeController = async (req, res) => {
       data: allEmployee,
     });
   } catch (error) {
+    console.log("error in all employee", error);
+
     return res.json({
       success: false,
       Message: "Internal server error",
@@ -45,11 +47,18 @@ export const getAllEmployeeController = async (req, res) => {
   }
 };
 
-export const updateEmployeeController = async (req, res) => {
+export const updateEmployeController = async (req, res) => {
   try {
     let { empId } = req.params;
 
-    let updatedEmp = await empModel.findByIdAndUpdate(empId);
+    let updatedEmp = await empModel.findByIdAndUpdate(
+      empId,
+      { empName, email, mobile },
+      {
+        new: true,
+        runvalidators: true,
+      },
+    );
 
     return res.json({
       success: true,
@@ -57,14 +66,16 @@ export const updateEmployeeController = async (req, res) => {
       data: updatedEmp,
     });
   } catch (error) {
+    console.log("error in updation", error);
+
     return res.json({
       success: false,
-      message: "Internal server error",
+      message: "Something went wrong while updation",
     });
   }
 };
 
-export const getSingleEmployeeController = async (req, res) => {
+export const getSingleEmployeController = async (req, res) => {
   try {
     let { empId } = req.params;
 
@@ -76,6 +87,8 @@ export const getSingleEmployeeController = async (req, res) => {
       data: singleEmp,
     });
   } catch (error) {
+    console.log("error in single Emp", error);
+
     return res.json({
       success: false,
       message: "Internal server error",
@@ -83,7 +96,7 @@ export const getSingleEmployeeController = async (req, res) => {
   }
 };
 
-export const deleteEmployeeController = async (req, res) => {
+export const deleteEmployeController = async (req, res) => {
   try {
     let { empId } = req.params;
 

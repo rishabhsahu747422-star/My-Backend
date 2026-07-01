@@ -1,16 +1,18 @@
 import express from "express";
 import {
-  createEmployeeController,
-  deleteEmployeeController,
-  getAllEmployeeController,
-  getSingleEmployeeController,
-  updateEmployeeController,
-} from "../controller/employe.controller";
+  createEmployeController,
+  deleteEmployeController,
+  getAllEmployeController,
+  getSingleEmployeController,
+  updateEmployeController,
+} from "../controller/employe.controller.js";
 
 let router = express.Router();
 
-router.post("/create", createEmployeeController);
-router.post("/", getAllEmployeeController);
-router.post("/update/:empId", updateEmployeeController);
-router.post("/:empId", getSingleEmployeeController);
-router.post("/delete", deleteEmployeeController);
+router.post("/create", createEmployeController);
+router.get("/view", getAllEmployeController);
+router.patch("/update/:empId", updateEmployeController);
+router.get("/:empId", getSingleEmployeController);
+router.delete("/delete/:empId", deleteEmployeController);
+
+export default router;

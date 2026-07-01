@@ -33,15 +33,6 @@ const App = () => {
   let handleUpdate = async (employee) => {
     setFormData(employee);
     setEditId(employee._id);
-    try {
-      let res = await axios.patch(
-        `http://localhost:3000/api/employees/update/${employee._id}`,
-        formData,
-      );
-      console.log(res);
-    } catch (error) {
-      console.log("error in updation", error);
-    }
   };
 
   useEffect(() => {
@@ -57,11 +48,25 @@ const App = () => {
     e.preventDefault();
 
     try {
-      let res = await axios.post(
-        "http://localhost:3000/api/employees/create ",
-        formData,
-      );
-      console.log("res->", res);
+      if (editId) {
+        let res = await axios.patch(
+          `http://localhost:3000/api/employees/update/${editId}`,
+          formData,
+        );
+
+        console.log("updated", res.data);
+        setEditId(null);
+      } else {
+        let res = await axios.post(
+          "http://localhost:3000/api/employees/create",
+          formData,
+        );
+
+        console.log("created", res.data);
+      }
+
+      setFormData({});
+      getAllEmployee();
     } catch (error) {
       console.log("error in api call", error);
     }
