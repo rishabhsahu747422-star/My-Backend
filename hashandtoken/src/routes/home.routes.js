@@ -28,7 +28,7 @@ router.get(
     res.status(200).json({
       message: "I m home route",
     });
-  }
+  },
 );
 
 module.exports = router;
